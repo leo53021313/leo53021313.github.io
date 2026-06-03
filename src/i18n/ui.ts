@@ -19,7 +19,7 @@ export const ui = {
     'about.title': '關於', 'contact.title': '聯絡',
     'contact.name': '稱呼', 'contact.email': 'Email', 'contact.message': '訊息',
     'contact.send': '送出', 'contact.or': '或直接寄信給我',
-    'theme.toggle': '切換深淺色', 'footer.privacy': '本站使用無 cookie 的流量分析',
+    'theme.toggle': '切換深淺色', 'a11y.skip': '跳至主要內容', 'footer.privacy': '本站使用無 cookie 的流量分析',
   },
   en: {
     'site.title': 'Leo — Python / AI + Data Engineering',
@@ -37,6 +37,6 @@ export const ui = {
     'about.title': 'About', 'contact.title': 'Contact',
     'contact.name': 'Name', 'contact.email': 'Email', 'contact.message': 'Message',
     'contact.send': 'Send', 'contact.or': 'Or email me directly',
-    'theme.toggle': 'Toggle theme', 'footer.privacy': 'Cookieless analytics, no tracking',
+    'theme.toggle': 'Toggle theme', 'a11y.skip': 'Skip to content', 'footer.privacy': 'Cookieless analytics, no tracking',
   },
 } as const;

@@ -7,7 +7,7 @@ test('home renders 3 project cards', async ({ page }) => {
 
 test('language toggle switches zh-TW <-> en', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'EN' }).click();
+  await page.getByRole('link', { name: 'EN', exact: true }).click();
   await expect(page).toHaveURL(/\/en\/?$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
