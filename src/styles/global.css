@@ -2,7 +2,7 @@
 :root {
   --bg: #FFFFFF;      --surface: #FFFFFF;   --surface-alt: #FAFAFB;
   --text: #111317;    --muted: #6B7280;     --border: #ECECEF;
-  --accent: #0F8A5F;  --accent-contrast: #FFFFFF;
+  --accent: #0C7C53;  --accent-contrast: #FFFFFF;
   --maxw: 64rem;      --radius: 12px;       --gap: clamp(1rem, 3vw, 2rem);
   --font-sans: 'Inter Variable','Noto Sans TC Variable', system-ui, -apple-system,
                'PingFang TC','Microsoft JhengHei', sans-serif;
