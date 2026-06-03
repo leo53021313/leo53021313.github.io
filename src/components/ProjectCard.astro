@@ -1,0 +1,26 @@
+---
+// src/components/ProjectCard.astro
+import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/utils';
+interface Props { slug: string; title: string; oneLiner: string; tech: string[]; status: 'done'|'wip'; featured?: boolean; }
+const { slug, title, oneLiner, tech, status, featured } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const href = localizedPath(`/projects/${slug}/`, lang);
+---
+<a class:list={["card", { featured }]} href={href}>
+  <h3>{title} {status === 'wip' && <span class="badge mono">{t('project.wip')}</span>}</h3>
+  <p>{oneLiner}</p>
+  <ul class="chips">{tech.slice(0, 4).map((x) => <li class="mono">{x}</li>)}</ul>
+</a>
+<style>
+  .card { display: block; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;
+    transition: transform .15s ease, border-color .15s ease; }
+  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .card.featured { grid-column: 1 / -1; }
+  .card h3 { margin: 0 0 .35rem; }
+  .card p { margin: 0 0 .75rem; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; list-style: none; }
+  .chips li { font-size: .75rem; border: 1px solid var(--border); border-radius: 6px; padding: .1rem .5rem; color: var(--muted); }
+  .badge { font-size: .7rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 0 .4rem; }
+</style>
