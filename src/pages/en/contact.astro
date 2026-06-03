@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 const t = useTranslations(getLangFromUrl(Astro.url));
-const ACCESS_KEY = 'WEB3FORMS_ACCESS_KEY'; // TODO: fill the Web3Forms access key at build
+const ACCESS_KEY = '5edeb84c-dd68-4216-b7d2-491c0252644b'; // TODO: fill the Web3Forms access key at build
 ---
 <BaseLayout title={`${t('contact.title')} · Leo`} description={t('site.tagline')}>
   <h1>{t('contact.title')}</h1>
@@ -16,7 +16,7 @@ const ACCESS_KEY = 'WEB3FORMS_ACCESS_KEY'; // TODO: fill the Web3Forms access ke
   </form>
   <p class="muted">{t('contact.or')}: <a id="mail" href="#">click</a></p>
   <script is:inline>
-    const u='hello', d='example.com';
+    const u='leo53021313', d='gmail.com';
     const a=document.getElementById('mail'); if(a){a.href=`mailto:${u}@${d}`; a.textContent=`${u}@${d}`;}
   </script>
 </BaseLayout>
