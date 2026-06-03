@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const href = localizedPath(`/projects/${slug}/`, lang);
 ---
-<a class:list={["card", { featured }]} href={href}>
+<a class:list={["card", { featured }]} href={href} aria-label={title}>
   <h3>{title} {status === 'wip' && <span class="badge mono">{t('project.wip')}</span>}</h3>
   <p>{oneLiner}</p>
   <ul class="chips">{tech.slice(0, 4).map((x) => <li class="mono">{x}</li>)}</ul>

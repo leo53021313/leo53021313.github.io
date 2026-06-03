@@ -16,7 +16,7 @@ const htmlLang = getLangFromUrl(Astro.url) === 'en' ? 'en' : 'zh-Hant-TW';
 <html lang={htmlLang}>
   <head><BaseHead title={title} description={description} image={image} /></head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link" aria-label="跳至主要內容">Skip to content</a>
     <Header />
     <main id="main" class="container"><slot /></main>
     <Footer />
