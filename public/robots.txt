@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://leo53021313.github.io/sitemap-index.xml
