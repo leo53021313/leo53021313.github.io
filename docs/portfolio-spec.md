@@ -85,14 +85,14 @@ jobs:
 | `--text` | `#111317` | `#CDD2D8` |
 | `--muted` | `#6B7280` | `#868D96` |
 | `--border` | `#ECECEF` | `#2B2F36` |
-| `--accent`（翠青） | `#0F8A5F` | `#4FB395` |
+| `--accent`（翠青） | `#0C7C53` | `#4FB395` |
 
 規則：
 - 預設**亮色**；提供暗色切換並 `prefers-color-scheme` 跟隨系統，選擇存 `localStorage`。
 - 暗色**不用純黑/純白**（防 halation/刺眼）。
 - **翠青只用在**：主要按鈕、連結、少數技術標籤。**不**當小字內文色。
 - `--surface` 亮色 `#FFFFFF`（卡片）；`#FAFAFB` 作 `--surface-alt`（區段交替底，可選）。
-- 上線前用對比工具確認所有 text/accent 配對過 **WCAG AA**（兩個模式都要）。
+- 上線前用對比工具確認所有 text/accent 配對過 **WCAG AA**（兩個模式都要）。已用 axe 驗證：亮色 accent 由 `#0F8A5F` 調為 **`#0C7C53`** 以達 4.5:1（白字按鈕/連結）；暗色 `#4FB395` 已通過。favicon/og.png 的裝飾色仍為 `#0F8A5F`（非文字對比，可日後對齊）。
 
 ### 2.2 字體
 - 標題 / 內文 / UI：**Inter** + **Noto Sans TC**
