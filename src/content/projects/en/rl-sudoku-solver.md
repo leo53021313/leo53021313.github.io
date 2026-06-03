@@ -9,7 +9,7 @@ evidence: TensorBoard training-curve screenshots + an input→solved board compa
 metrics:
   - "Training convergence curves (TensorBoard: reward / loss vs episodes)"
 tags: [Reinforcement Learning, RL]
-featured: true
+featured: false
 order: 1
 ---
 ## Problem

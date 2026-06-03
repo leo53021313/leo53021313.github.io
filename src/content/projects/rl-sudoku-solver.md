@@ -10,7 +10,7 @@ metrics:
   - 訓練收斂曲線（TensorBoard：reward / loss vs episodes）
   # 待補：解題成功率（solved X/100）、平均步數、框架(PyTorch?)、訓練環境(Gymnasium?)
 tags: [強化學習, RL]
-featured: true
+featured: false
 order: 1
 ---
 ## 問題
