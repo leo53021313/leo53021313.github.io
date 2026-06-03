@@ -7,10 +7,12 @@ timeframe: 2026-04-24 ~ now
 tech: [Python, requests, BeautifulSoup, Supabase (PostgreSQL), Vercel]
 demoUrl: https://coolpc-tracker.vercel.app/
 metrics:
-  - Updated daily (last 2026-06-01 10:09)
+  - Updated daily (scheduled crawler)
+  - Tracking 2,259 products (SKUs)
 tags: [Data Engineering, Scraping, Data Viz]
 featured: true
 order: 0
+cover: /images/coolpc-cover.png
 ---
 ## Problem
 I wanted to track when PC components drop in price, but the retailer's site keeps no price history.

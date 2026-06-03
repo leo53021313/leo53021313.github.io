@@ -28,6 +28,7 @@ const d = entry.data;
     {d.demoUrl && <a class="btn primary" href={d.demoUrl}>{t('project.live')} ↗</a>}
     <span class="muted mono">{t('project.codeOnRequest')}</span>
   </div>
+  {d.cover && <img class="cover" src={d.cover} alt={d.title} width="1280" height="800" fetchpriority="high" />}
   {d.evidence && <p class="evidence muted">{d.evidence}</p>}
   <article class="prose"><Content /></article>
   {d.metrics.length > 0 && (
@@ -44,4 +45,5 @@ const d = entry.data;
   .cta{display:flex;gap:1rem;align-items:center;margin:1rem 0} .btn.primary{background:var(--accent);color:var(--accent-contrast);padding:.5rem 1rem;border-radius:10px;text-decoration:none}
   .prose{margin-top:1.5rem} .prose :where(h2){margin-top:2rem;border-top:1px solid var(--border);padding-top:1rem}
   .pager{display:flex;justify-content:space-between;margin-top:3rem}
+  .cover{width:100%;height:auto;border:1px solid var(--border);border-radius:var(--radius);margin:1rem 0;display:block}
 </style>

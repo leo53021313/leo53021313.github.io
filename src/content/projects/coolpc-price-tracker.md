@@ -7,12 +7,13 @@ timeframe: 2026-04-24 ~ 至今
 tech: [Python, requests, BeautifulSoup, Supabase (PostgreSQL), Vercel]
 demoUrl: https://coolpc-tracker.vercel.app/
 metrics:
-  - 每日更新（最後 2026-06-01 10:09）
+  - 每日自動更新（排程爬蟲）
+  - 追蹤 2,259 件商品（SKU）
   # 待補：SKU 總數 / 累積筆數（Supabase COUNT(*)）、涵蓋類別數、最大漲跌幅
 tags: [資料工程, 爬蟲, 資料視覺化]
 featured: true
 order: 0
-# 待補：cover（站截圖路徑，作 LCP 首圖）
+cover: /images/coolpc-cover.png
 ---
 ## 問題
 想追蹤 PC 零組件的降價時機，但官網沒有歷史價格。
