@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+const ACCESS_KEY = 'WEB3FORMS_ACCESS_KEY'; // TODO: fill the Web3Forms access key at build
+---
+<BaseLayout title={`${t('contact.title')} · Leo`} description={t('site.tagline')}>
+  <h1>{t('contact.title')}</h1>
+  <form action="https://api.web3forms.com/submit" method="POST" class="form">
+    <input type="hidden" name="access_key" value={ACCESS_KEY} />
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+    <label>{t('contact.name')}<input name="name" required /></label>
+    <label>{t('contact.email')}<input type="email" name="email" required /></label>
+    <label>{t('contact.message')}<textarea name="message" rows="5" required></textarea></label>
+    <button type="submit" class="btn primary">{t('contact.send')}</button>
+  </form>
+  <p class="muted">{t('contact.or')}: <a id="mail" href="#">click</a></p>
+  <script is:inline>
+    const u='hello', d='example.com';
+    const a=document.getElementById('mail'); if(a){a.href=`mailto:${u}@${d}`; a.textContent=`${u}@${d}`;}
+  </script>
+</BaseLayout>
+<style>
+  .form{display:grid;gap:1rem;max-width:32rem} label{display:grid;gap:.35rem}
+  input,textarea{font:inherit;padding:.6rem;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}
+  .btn.primary{background:var(--accent);color:var(--accent-contrast);border:none;padding:.6rem 1.1rem;border-radius:10px;cursor:pointer;font-weight:600}
+  .hp{position:absolute;left:-9999px}
+</style>

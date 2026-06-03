@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+const skills = ['Python','資料工程 / 爬蟲','資料管線','強化學習 (RL)','LLM 應用 (Gemini)','Supabase / PostgreSQL','GitHub Actions','Astro / 前端'];
+---
+<BaseLayout title={`${t('about.title')} · Leo`} description={t('site.tagline')}>
+  <h1>{t('about.title')}</h1>
+  <p>正在轉職進入業界的工程師，專注把 AI 與資料工程落地成實際應用。日常以 AI 輔助開發，持續累積專長。</p>
+  <h2>{t('home.skills')}</h2>
+  <ul class="matrix">{skills.map((s) => <li class="mono">{s}</li>)}</ul>
+  <h2>歷程</h2>
+  <ul class="timeline">
+    <li>2026 — 原價屋價格庫上線（每日更新）、RL 解數獨、AI 新聞 Discord 摘要</li>
+  </ul>
+</BaseLayout>
+<style>.matrix{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0}.matrix li{border:1px solid var(--border);border-radius:8px;padding:.3rem .7rem;font-size:.85rem}.timeline{color:var(--muted)}</style>

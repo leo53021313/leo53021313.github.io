@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+const skills = ['Python','Data engineering / scraping','Data pipelines','Reinforcement learning (RL)','LLM apps (Gemini)','Supabase / PostgreSQL','GitHub Actions','Astro / front end'];
+---
+<BaseLayout title={`${t('about.title')} · Leo`} description={t('site.tagline')}>
+  <h1>{t('about.title')}</h1>
+  <p>An engineer transitioning into industry, focused on turning AI &amp; data engineering into real, shipped applications. I build with AI assistance daily and keep deepening my skills.</p>
+  <h2>{t('home.skills')}</h2>
+  <ul class="matrix">{skills.map((s) => <li class="mono">{s}</li>)}</ul>
+  <h2>Timeline</h2>
+  <ul class="timeline">
+    <li>2026 — Coolpc price-history tracker (daily updates), RL sudoku solver, AI-news Discord digest</li>
+  </ul>
+</BaseLayout>
+<style>.matrix{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0}.matrix li{border:1px solid var(--border);border-radius:8px;padding:.3rem .7rem;font-size:.85rem}.timeline{color:var(--muted)}</style>
