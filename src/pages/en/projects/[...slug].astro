@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations, localizedPath } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const all = await getCollection('projects');
+  const en = all.filter((p) => p.id.startsWith('en/')).sort((a, b) => a.data.order - b.data.order);
+  return en.map((entry, i) => ({
+    params: { slug: entry.id.replace(/^en\//, '') },
+    props: { entry, prev: en[i - 1], next: en[i + 1] },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const L = (p: string) => localizedPath(p, lang);
+const slugOf = (id: string) => id.replace(/^en\//, '');
+const d = entry.data;
+---
+<BaseLayout title={`${d.title} · Leo`} description={d.oneLiner} image={d.cover ?? '/og.png'}>
+  <a href={L('/projects/')}>← {t('project.back')}</a>
+  <h1>{d.title}</h1>
+  <p class="lead">{d.oneLiner}</p>
+  <ul class="chips">{d.tech.map((x) => <li class="mono">{x}</li>)}</ul>
+  <p class="mono muted">{d.status === 'wip' ? t('project.wip') : ''} {d.timeframe}</p>
+  <div class="cta">
+    {d.demoUrl && <a class="btn primary" href={d.demoUrl}>{t('project.live')} ↗</a>}
+    <span class="muted mono">{t('project.codeOnRequest')}</span>
+  </div>
+  {d.evidence && <p class="evidence muted">{d.evidence}</p>}
+  <article class="prose"><Content /></article>
+  {d.metrics.length > 0 && (
+    <section><h2>{t('project.metrics')}</h2>
+      <ul class="mono">{d.metrics.map((m) => <li>{m}</li>)}</ul></section>)}
+  <nav class="pager">
+    {prev && <a href={L(`/projects/${slugOf(prev.id)}/`)}>← {t('project.prev')}</a>}
+    {next && <a href={L(`/projects/${slugOf(next.id)}/`)}>{t('project.next')} →</a>}
+  </nav>
+</BaseLayout>
+<style>
+  .lead{font-size:1.15rem;color:var(--muted)} .chips{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
+  .chips li{font-size:.75rem;border:1px solid var(--border);border-radius:6px;padding:.1rem .5rem;color:var(--muted)}
+  .cta{display:flex;gap:1rem;align-items:center;margin:1rem 0} .btn.primary{background:var(--accent);color:var(--accent-contrast);padding:.5rem 1rem;border-radius:10px;text-decoration:none}
+  .prose{margin-top:1.5rem} .prose :where(h2){margin-top:2rem;border-top:1px solid var(--border);padding-top:1rem}
+  .pager{display:flex;justify-content:space-between;margin-top:3rem}
+</style>
