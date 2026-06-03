@@ -1,0 +1,18 @@
+---
+// src/components/ThemeToggle.astro
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+<button id="theme-toggle" type="button" aria-label={t('theme.toggle')} class="mono">◐</button>
+<script is:inline>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = cur;
+    localStorage.setItem('theme', cur);
+  });
+</script>
+<style>
+  #theme-toggle { background: none; border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; width: 2.25rem; height: 2.25rem; cursor: pointer; }
+</style>
