@@ -1,0 +1,18 @@
+---
+// src/components/LanguageToggle.astro
+import { getLangFromUrl } from '../i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+const path = Astro.url.pathname;
+const toZh = path.replace(/^\/en\/?/, '/');
+const toEn = path.startsWith('/en') ? path : '/en' + path;
+---
+<div class="lang" role="group" aria-label="Language">
+  <a href={toZh} aria-current={lang === 'zh-tw' ? 'true' : undefined}>繁中</a>
+  <span aria-hidden="true">/</span>
+  <a href={toEn} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+</div>
+<style>
+  .lang { display: inline-flex; gap: .4rem; font-size: .9rem; }
+  .lang a[aria-current='true'] { color: var(--text); font-weight: 600; }
+  .lang a:not([aria-current]) { color: var(--muted); }
+</style>

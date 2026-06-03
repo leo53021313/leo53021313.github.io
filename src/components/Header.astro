@@ -1,0 +1,29 @@
+---
+// src/components/Header.astro
+import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/utils';
+import LanguageToggle from './LanguageToggle.astro';
+import ThemeToggle from './ThemeToggle.astro';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const L = (p: string) => localizedPath(p, lang);
+---
+<header class="container">
+  <a href={L('/')} class="brand mono">Leo</a>
+  <nav aria-label="Primary">
+    <a href={L('/projects/')}>{t('nav.projects')}</a>
+    <a href={L('/about/')}>{t('nav.about')}</a>
+    <a href={L('/contact/')}>{t('nav.contact')}</a>
+  </nav>
+  <div class="actions"><LanguageToggle /><ThemeToggle /></div>
+</header>
+<style>
+  header { display: flex; align-items: center; gap: 1rem; padding-block: 1rem;
+    position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); z-index: 10; }
+  .brand { font-weight: 700; font-size: 1.1rem; text-decoration: none; color: var(--text); }
+  nav { display: flex; gap: 1.25rem; margin-inline-start: auto; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--text); }
+  .actions { display: flex; gap: .75rem; align-items: center; }
+  @media (max-width: 640px) { nav { gap: .9rem; font-size: .9rem; } }
+</style>
