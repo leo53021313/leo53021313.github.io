@@ -150,6 +150,7 @@ leo53021313.github.io  (根網址，zh-TW 預設)
 **標籤**：3 個專案**只做展示用 chip**，**不做互動過濾**（過度設計）；作品到 **6–8 個**再加。
 
 `src/content.config.ts`：
+`src/content.config.ts`（**現況；2026-06 已實作**）：
 ```ts
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
@@ -158,28 +159,34 @@ import { z } from 'astro/zod';
 const projects = defineCollection({
   // 語系由檔案路徑判斷：/en/ 子資料夾為英文，其餘 zh-TW（不用 lang 欄位）
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    oneLiner: z.string(),
-    role: z.string(),
-    status: z.enum(['done', 'wip']),
-    timeframe: z.string(),
-    tech: z.array(z.string()),
-    repoUrl: z.string().url().optional(),   // 真實 repo（public 才放）
-    demoUrl: z.string().url().optional(),   // 只放真實 live 網址
-    evidence: z.string().optional(),        // 截圖/GIF 說明（無 live demo 時用）
-    metrics: z.array(z.string()).default([]),
-    lessons: z.string().optional(),
-    tags: z.array(z.string()).default([]),
-    featured: z.boolean().default(false),
-    order: z.number().default(0),           // 列表排序，原價屋最小
-    cover: z.string().optional(),           // 首圖/LCP 圖路徑
-  }),
+  // schema 用函式形式以便使用 image() helper：cover 走 astro:assets，自動 AVIF/WebP + 響應式 + 尺寸
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      oneLiner: z.string(),
+      role: z.string(),                       // 顯示在 meta 列
+      status: z.enum(['done', 'wip']),
+      timeframe: z.string(),
+      tech: z.array(z.string()),              // 渲染在「技術棧 / Stack」區塊
+      repoUrl: z.url().optional(),            // 有值→連結；無值→「程式碼可應要求提供」
+      demoUrl: z.url().optional(),            // 只放真實 live 網址
+      evidence: z.string().optional(),        // 無 live demo 時的證據說明
+      metrics: z.array(z.string()).default([]),
+      tags: z.array(z.string()).default([]),  // 展示用 kicker chips
+      featured: z.boolean().default(false),
+      order: z.number().default(0),
+      cover: image().optional(),              // 路徑相對 .md 檔 → src/assets/…
+      coverAlt: z.string().optional(),        // cover 的無障礙描述
+    }),
 });
 export const collections = { projects };
 ```
 
-### 5.1 三個專案填寫範例（已換真實數據；`待補` 處建站時補上）
+> **一致性架構（2026-06 實作，取代手刻）**：案例內頁版面集中在單一 [`src/components/CaseStudy.astro`]，中英共用、語系由 `entry.id` 判斷 → 兩語言版面不會分歧；列表/路由都走 `src/i18n/utils.ts` 的 `getLocalizedProjects()`，內含**建置期雙語對等檢查**（缺翻譯 build 直接失敗）；chip/button/grid 樣式集中在 `global.css`。新增專案照根目錄 **`ADD-PROJECT.md`** + `src/content/projects/_template.md`（中英）。**`lessons` 已不是 schema 欄位** —— 「踩坑 / Lessons」改寫在 Markdown body；`role`/`tags`/`repoUrl` 皆已實際渲染。
+
+### 5.1 三個專案填寫範例（建站初期規劃草稿）
+
+> 註：以下為**規劃草稿**，與現況有兩點差異——(1) `lessons:` 已**不是** frontmatter 欄位，踩坑改寫在 Markdown body；(2) `cover:` 改用相對 `.md` 的 `src/assets/…` 路徑（image() helper）。實際填寫請以 `ADD-PROJECT.md` + `_template.md` 為準。
 
 **① 原價屋價格庫（第一順位・featured）**
 ```yaml

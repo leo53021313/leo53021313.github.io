@@ -4,6 +4,9 @@ The site stays consistent because **every project flows through the same Zod sch
 the shared `CaseStudy.astro` component, and shared `global.css` primitives** — there is
 no per-project layout or styling to get out of sync.
 
+> **Tip:** to gather everything in one go, fill in [`docs/new-project-prompt.md`](docs/new-project-prompt.md)
+> when you finish a project and hand it back — it maps 1:1 to the schema below.
+
 ## Steps
 
 1. Copy `src/content/projects/_template.md` → `src/content/projects/<slug>.md`.
