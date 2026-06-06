@@ -1,23 +1,26 @@
 ---
-// src/pages/index.astro
-import { getCollection } from 'astro:content';
+// src/pages/en/index.astro — mirror of src/pages/index.astro (lang comes from the URL via t())
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations, localizedPath, getLocalizedProjects } from '../../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const L = (p: string) => localizedPath(p, lang);
-const all = await getCollection('projects');
-const mine = all
-  .filter((p) => (lang === 'en' ? p.id.startsWith('en/') : !p.id.startsWith('en/')))
-  .sort((a, b) => a.data.order - b.data.order);
-const slugOf = (id: string) => id.replace(/^en\//, '');
+const mine = await getLocalizedProjects(lang);
+const services = [
+  { title: t('svc.pipeline.t'), desc: t('svc.pipeline.d') },
+  { title: t('svc.automation.t'), desc: t('svc.automation.d') },
+  { title: t('svc.llm.t'), desc: t('svc.llm.d') },
+  { title: t('svc.viz.t'), desc: t('svc.viz.d') },
+];
 ---
 <BaseLayout title={t('site.title')} description={t('site.tagline')}>
   <section class="hero">
+    <p class="avail mono"><span class="dot" aria-hidden="true"></span>{t('hero.available')}</p>
     <h1>Leo</h1>
     <p class="role">{t('hero.role')}</p>
     <p class="tagline">{t('site.tagline')}</p>
+    <p class="pitch">{t('hero.pitch')}</p>
     <div class="cta">
       <a class="btn primary" href={L('/projects/')}>{t('cta.viewWork')}</a>
       <a class="btn ghost" href={L('/contact/')}>{t('cta.contact')}</a>
@@ -26,20 +29,32 @@ const slugOf = (id: string) => id.replace(/^en\//, '');
 
   <section>
     <h2>{t('home.featured')}</h2>
-    <div class="grid">
-      {mine.map((p) => <ProjectCard slug={slugOf(p.id)} title={p.data.title}
-        oneLiner={p.data.oneLiner} tech={p.data.tech} status={p.data.status} featured={p.data.featured} />)}
+    <div class="project-grid">
+      {mine.map(({ entry, slug }) => <ProjectCard slug={slug} title={entry.data.title}
+        oneLiner={entry.data.oneLiner} tech={entry.data.tech} status={entry.data.status} featured={entry.data.featured} />)}
+    </div>
+  </section>
+
+  <section>
+    <h2>{t('home.services')}</h2>
+    <div class="svc-grid">
+      {services.map((s) => (
+        <div class="svc-card">
+          <h3>{s.title}</h3>
+          <p>{s.desc}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <section>
     <h2>{t('home.skills')}</h2>
-    <p class="mono muted">Python · Scraping · Data pipelines · LLM · RL · Supabase · GitHub Actions</p>
+    <p class="mono muted">{t('home.skillsList')}</p>
   </section>
 
   <section>
     <h2>{t('home.aboutTeaser')}</h2>
-    <p>{t('site.tagline')}. <a href={L('/about/')}>{t('home.more')} →</a></p>
+    <p>{t('site.tagline')} <a href={L('/about/')}>{t('home.more')} →</a></p>
   </section>
 </BaseLayout>
 
@@ -47,13 +62,17 @@ const slugOf = (id: string) => id.replace(/^en\//, '');
   .hero { padding-block: clamp(2rem, 8vw, 5rem); }
   .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; letter-spacing: -.02em; }
   .role { font-size: 1.1rem; margin: .75rem 0 .25rem; }
-  .tagline { color: var(--muted); margin: 0 0 1.5rem; }
+  .avail { display: inline-flex; align-items: center; gap: .45rem; font-size: .8rem; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 999px; padding: .15rem .7rem; margin: 0 0 1.1rem; }
+  .avail .dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent); }
+  .tagline { color: var(--muted); margin: 0 0 .5rem; }
+  .pitch { margin: 0 0 1.5rem; max-width: 44rem; }
   .cta { display: flex; gap: .75rem; flex-wrap: wrap; }
-  .btn { padding: .6rem 1.1rem; border-radius: 10px; text-decoration: none; font-weight: 600; }
-  .btn.primary { background: var(--accent); color: var(--accent-contrast); }
-  .btn.ghost { border: 1px solid var(--border); color: var(--text); }
-  .btn.ghost:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+  /* .btn and .project-grid are shared primitives in global.css */
+  .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+  .svc-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; }
+  .svc-card h3 { margin: 0 0 .35rem; font-size: 1rem; }
+  .svc-card p { margin: 0; color: var(--muted); font-size: .9rem; }
   section { margin-block: 2.5rem; }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .svc-grid { grid-template-columns: 1fr; } }
 </style>
