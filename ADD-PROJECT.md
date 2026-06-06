@@ -4,8 +4,10 @@ The site stays consistent because **every project flows through the same Zod sch
 the shared `CaseStudy.astro` component, and shared `global.css` primitives** — there is
 no per-project layout or styling to get out of sync.
 
-> **Tip:** to gather everything in one go, fill in [`docs/new-project-prompt.md`](docs/new-project-prompt.md)
-> when you finish a project and hand it back — it maps 1:1 to the schema below.
+> **Tip — automated:** paste [`docs/portfolio-extractor-prompt.md`](docs/portfolio-extractor-prompt.md) into the
+> side-project's own Claude Code session; it introspects the repo, captures screenshots, and writes a
+> `Portfolio/<slug>/handoff.md` you hand back. Manual fallback: [`docs/new-project-prompt.md`](docs/new-project-prompt.md).
+> Both map 1:1 to the schema below.
 
 ## Steps
 

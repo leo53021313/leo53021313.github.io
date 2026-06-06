@@ -1,4 +1,6 @@
-# 新作品 intake prompt（完成新專案後，填完整段貼回給 Claude）
+# 新作品 intake prompt（手動填寫版・備援）
+
+> 🤖 **想自動化？** 用 [`portfolio-extractor-prompt.md`](portfolio-extractor-prompt.md) —— 貼進另一個專案的 Claude Code，它會自動讀 repo、跑指令拿數字、截圖，產出 handoff 給我。**這份是手動填寫的備援版。**
 
 > **用法**：每做完一個作品，把下面 `===` 之間整段複製、填好（**中文寫就好，英文版我幫你翻並標出要校稿的技術詞**），連同截圖一起貼回給我。我會照 [`ADD-PROJECT.md`](../ADD-PROJECT.md) + `src/content.config.ts` 的 schema，幫你新增/更新**中英雙語**作品頁。
 >
