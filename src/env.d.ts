@@ -1,6 +1,5 @@
 /// <reference types="astro/client" />
 
 // Fontsource packages are CSS-only and have no TypeScript declarations.
-declare module '@fontsource-variable/inter';
+// Inter + JetBrains now load via the native font API; only Noto Sans TC is imported directly.
 declare module '@fontsource-variable/noto-sans-tc';
-declare module '@fontsource/jetbrains-mono';

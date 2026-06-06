@@ -4,9 +4,11 @@
   --text: #111317;    --muted: #6B7280;     --border: #ECECEF;
   --accent: #0C7C53;  --accent-contrast: #FFFFFF;
   --maxw: 64rem;      --radius: 12px;       --gap: clamp(1rem, 3vw, 2rem);
-  --font-sans: 'Inter Variable','Noto Sans TC Variable', system-ui, -apple-system,
-               'PingFang TC','Microsoft JhengHei', sans-serif;
-  --font-mono: 'JetBrains Mono','Noto Sans TC Variable', ui-monospace, monospace;
+  /* Inter & JetBrains come from the native font API (astro.config.mjs); each cssVariable
+     already carries the family + an auto metric-adjusted fallback + 'Noto Sans TC Variable'
+     (for CJK) + system fonts, so no generic swallows Chinese before Noto. */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
 }
 :root[data-theme='dark'] {
   --bg: #16181C;      --surface: #1D2025;   --surface-alt: #1D2025;
@@ -21,11 +23,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: var(--accent); text-underline-offset: 3px; }
-:where(a, button, input, [tabindex]):focus-visible {
+:where(a, button, input, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px;
 }
 .container { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gap); }
 .mono { font-family: var(--font-mono); }
+.muted { color: var(--muted); }
+.evidence { font-size: .9rem; color: var(--muted); margin: .5rem 0; }
 .skip-link {
   position: absolute; left: -999px; top: 0; background: var(--surface);
   padding: .5rem 1rem; border: 1px solid var(--border);

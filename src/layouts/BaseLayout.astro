@@ -1,8 +1,10 @@
 ---
 // src/layouts/BaseLayout.astro
-import '@fontsource-variable/inter';
+// Inter + JetBrains Mono are now served via Astro's native font API (see astro.config.mjs
+// + the <Font> components in BaseHead). Noto Sans TC stays a fontsource import: its CJK
+// unicode-range slicing is what keeps Chinese pages light, and the font provider can't
+// subset CJK safely.
 import '@fontsource-variable/noto-sans-tc';
-import '@fontsource/jetbrains-mono';
 import '../styles/global.css';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
