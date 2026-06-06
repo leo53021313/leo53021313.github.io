@@ -30,6 +30,17 @@ a { color: var(--accent); text-underline-offset: 3px; }
 .mono { font-family: var(--font-mono); }
 .muted { color: var(--muted); }
 .evidence { font-size: .9rem; color: var(--muted); margin: .5rem 0; }
+
+/* Shared UI primitives — single source of truth so cards, hero, and case studies
+   can never drift. Used across ProjectCard, the home hero, and CaseStudy. */
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; list-style: none; }
+.chips li { font-size: .75rem; border: 1px solid var(--border); border-radius: 6px; padding: .1rem .5rem; color: var(--muted); }
+.btn { display: inline-block; padding: .6rem 1.1rem; border-radius: 10px; text-decoration: none; font-weight: 600; }
+.btn.primary { background: var(--accent); color: var(--accent-contrast); }
+.btn.ghost { border: 1px solid var(--border); color: var(--text); }
+.btn.ghost:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+@media (max-width: 640px) { .project-grid { grid-template-columns: 1fr; } }
 .skip-link {
   position: absolute; left: -999px; top: 0; background: var(--surface);
   padding: .5rem 1rem; border: 1px solid var(--border);
