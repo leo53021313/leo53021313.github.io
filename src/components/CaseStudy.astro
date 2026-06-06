@@ -1,0 +1,74 @@
+---
+// src/components/CaseStudy.astro
+// Single source of truth for a project detail page — both /projects/<slug> and
+// /en/projects/<slug> render through this, so the two languages can never drift.
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import { getProjectLang, useTranslations, localizedPath, projectSlug } from '../i18n/utils';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  prev?: CollectionEntry<'projects'>;
+  next?: CollectionEntry<'projects'>;
+}
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const lang = getProjectLang(entry.id); // language from the file path, not the URL
+const t = useTranslations(lang);
+const L = (p: string) => localizedPath(p, lang);
+const d = entry.data;
+---
+<a href={L('/projects/')}>← {t('project.back')}</a>
+<h1>{d.title}</h1>
+<p class="lead">{d.oneLiner}</p>
+<p class="mono muted meta">{d.role} · {d.status === 'wip' ? `${t('project.wip')} · ` : ''}{d.timeframe}</p>
+{d.tags.length > 0 && <ul class="chips">{d.tags.map((x) => <li class="mono">{x}</li>)}</ul>}
+<div class="cta">
+  {d.demoUrl && <a class="btn primary" href={d.demoUrl}>{t('project.live')} ↗</a>}
+  {d.repoUrl
+    ? <a class="btn ghost" href={d.repoUrl}>Repo ↗</a>
+    : <span class="muted mono">{t('project.codeOnRequest')}</span>}
+</div>
+{d.cover && (
+  <Picture
+    class="cover"
+    src={d.cover}
+    alt={d.coverAlt ?? d.oneLiner}
+    widths={[640, 1024, 1280]}
+    sizes="(max-width: 640px) 100vw, 1024px"
+    formats={['avif', 'webp']}
+    fallbackFormat="png"
+    fetchpriority="high"
+    loading="eager"
+  />
+)}
+{d.evidence && <p class="evidence">{d.evidence}</p>}
+<article class="prose"><Content /></article>
+{d.tech.length > 0 && (
+  <section>
+    <h2>{t('project.stack')}</h2>
+    <ul class="chips">{d.tech.map((x) => <li class="mono">{x}</li>)}</ul>
+  </section>
+)}
+{d.metrics.length > 0 && (
+  <section>
+    <h2>{t('project.metrics')}</h2>
+    <ul class="mono metrics">{d.metrics.map((m) => <li>{m}</li>)}</ul>
+  </section>
+)}
+<nav class="pager">
+  {prev && <a href={L(`/projects/${projectSlug(prev.id)}/`)}>← {t('project.prev')}</a>}
+  {next && <a href={L(`/projects/${projectSlug(next.id)}/`)}>{t('project.next')} →</a>}
+</nav>
+<style>
+  .lead { font-size: 1.15rem; color: var(--muted); }
+  .meta { margin: .25rem 0 .75rem; }
+  .cta { display: flex; gap: 1rem; align-items: center; margin: 1rem 0; flex-wrap: wrap; }
+  .cover { width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); margin: 1rem 0; display: block; }
+  .prose { margin-top: 1.5rem; }
+  /* every section heading (body prose + Stack/Results) shares the same divider rhythm */
+  .prose :where(h2), section > h2 { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .metrics { padding-left: 1.2rem; }
+  .pager { display: flex; justify-content: space-between; margin-top: 3rem; }
+</style>

@@ -1,20 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedProjects } from '../../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const mine = (await getCollection('projects'))
-  .filter((p) => (lang === 'en' ? p.id.startsWith('en/') : !p.id.startsWith('en/')))
-  .sort((a, b) => a.data.order - b.data.order);
-const slugOf = (id: string) => id.replace(/^en\//, '');
+const mine = await getLocalizedProjects(lang);
 ---
 <BaseLayout title={`${t('projects.title')} · Leo`} description={t('site.tagline')}>
   <h1>{t('projects.title')}</h1>
-  <div class="grid">
-    {mine.map((p) => <ProjectCard slug={slugOf(p.id)} title={p.data.title}
-      oneLiner={p.data.oneLiner} tech={p.data.tech} status={p.data.status} featured={p.data.featured} />)}
+  <div class="project-grid">
+    {mine.map(({ entry, slug }) => <ProjectCard slug={slug} title={entry.data.title}
+      oneLiner={entry.data.oneLiner} tech={entry.data.tech} status={entry.data.status} featured={entry.data.featured} />)}
   </div>
 </BaseLayout>
-<style>.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-top:1.5rem}@media(max-width:640px){.grid{grid-template-columns:1fr}}</style>
+<style>.project-grid { margin-top: 1.5rem; }</style>

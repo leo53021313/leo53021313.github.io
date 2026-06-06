@@ -10,7 +10,6 @@ metrics:
   - 58 sources
   - 1 push/day × 10 items
   - "Schedule: GitHub Actions (daily)"
-lessons: GitHub Actions schedule is occasionally delayed → plan retries / alerting / schedule tuning
 tags: [LLM, Automation, Data Pipeline]
 featured: false
 order: 2

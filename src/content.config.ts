@@ -18,7 +18,7 @@ const projects = defineCollection({
       demoUrl: z.url().optional(),
       evidence: z.string().optional(),
       metrics: z.array(z.string()).default([]),
-      lessons: z.string().optional(),
+      // case-study narrative (incl. the "踩坑 / Lessons" section) lives in the Markdown body
       tags: z.array(z.string()).default([]),
       featured: z.boolean().default(false),
       order: z.number().default(0),

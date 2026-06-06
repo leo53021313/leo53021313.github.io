@@ -1,17 +1,12 @@
 ---
 // src/pages/index.astro
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, localizedPath, getLocalizedProjects } from '../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const L = (p: string) => localizedPath(p, lang);
-const all = await getCollection('projects');
-const mine = all
-  .filter((p) => (lang === 'en' ? p.id.startsWith('en/') : !p.id.startsWith('en/')))
-  .sort((a, b) => a.data.order - b.data.order);
-const slugOf = (id: string) => id.replace(/^en\//, '');
+const mine = await getLocalizedProjects(lang);
 ---
 <BaseLayout title={t('site.title')} description={t('site.tagline')}>
   <section class="hero">
@@ -26,9 +21,9 @@ const slugOf = (id: string) => id.replace(/^en\//, '');
 
   <section>
     <h2>{t('home.featured')}</h2>
-    <div class="grid">
-      {mine.map((p) => <ProjectCard slug={slugOf(p.id)} title={p.data.title}
-        oneLiner={p.data.oneLiner} tech={p.data.tech} status={p.data.status} featured={p.data.featured} />)}
+    <div class="project-grid">
+      {mine.map(({ entry, slug }) => <ProjectCard slug={slug} title={entry.data.title}
+        oneLiner={entry.data.oneLiner} tech={entry.data.tech} status={entry.data.status} featured={entry.data.featured} />)}
     </div>
   </section>
 
@@ -49,11 +44,6 @@ const slugOf = (id: string) => id.replace(/^en\//, '');
   .role { font-size: 1.1rem; margin: .75rem 0 .25rem; }
   .tagline { color: var(--muted); margin: 0 0 1.5rem; }
   .cta { display: flex; gap: .75rem; flex-wrap: wrap; }
-  .btn { padding: .6rem 1.1rem; border-radius: 10px; text-decoration: none; font-weight: 600; }
-  .btn.primary { background: var(--accent); color: var(--accent-contrast); }
-  .btn.ghost { border: 1px solid var(--border); color: var(--text); }
-  .btn.ghost:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+  /* .btn and .project-grid are shared primitives in global.css */
   section { margin-block: 2.5rem; }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 </style>

@@ -10,7 +10,6 @@ metrics:
   - 58 個來源
   - 每日 1 次推送 × 10 則
   - 排程：GitHub Actions（每日定時）
-lessons: GitHub Actions 排程偶發延遲 → 規劃加重試 / 告警 / 調整排程
 tags: [LLM, 自動化, 資料管線]
 featured: false
 order: 2
