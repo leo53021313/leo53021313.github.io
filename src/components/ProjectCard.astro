@@ -16,7 +16,7 @@ const href = localizedPath(`/projects/${slug}/`, lang);
   .card { display: block; background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;
     transition: transform .15s ease, border-color .15s ease; }
-  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .card:hover, .card:focus-visible { transform: translateY(-2px); border-color: var(--accent); }
   .card.featured { grid-column: 1 / -1; }
   .card h3 { margin: 0 0 .35rem; }
   .card p { margin: 0 0 .75rem; color: var(--muted); }

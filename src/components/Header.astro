@@ -6,14 +6,20 @@ import ThemeToggle from './ThemeToggle.astro';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const L = (p: string) => localizedPath(p, lang);
+const here = Astro.url.pathname;
+// active when the current path is within this section (so /projects/<slug>/ also lights up Work)
+const active = (p: string) => (here.startsWith(L(p)) ? 'page' : undefined);
 ---
 <header class="container">
   <a href={L('/')} class="brand mono">Leo</a>
-  <nav aria-label="Primary">
-    <a href={L('/projects/')}>{t('nav.projects')}</a>
-    <a href={L('/about/')}>{t('nav.about')}</a>
-    <a href={L('/contact/')}>{t('nav.contact')}</a>
-  </nav>
+  <details class="menu">
+    <summary aria-label={t('a11y.menu')}><span aria-hidden="true">☰</span></summary>
+    <nav aria-label="Primary">
+      <a href={L('/projects/')} aria-current={active('/projects/')}>{t('nav.projects')}</a>
+      <a href={L('/about/')} aria-current={active('/about/')}>{t('nav.about')}</a>
+      <a href={L('/contact/')} aria-current={active('/contact/')}>{t('nav.contact')}</a>
+    </nav>
+  </details>
   <div class="actions"><LanguageToggle /><ThemeToggle /></div>
 </header>
 <style>
@@ -21,9 +27,36 @@ const L = (p: string) => localizedPath(p, lang);
     position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 88%, transparent);
     backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); z-index: 10; }
   .brand { font-weight: 700; font-size: 1.1rem; text-decoration: none; color: var(--text); }
-  nav { display: flex; gap: 1.25rem; margin-inline-start: auto; }
+  .menu { margin-inline-start: auto; position: relative; }
+  /* hamburger hidden on desktop */
+  .menu > summary { display: none; list-style: none; }
+  .menu > summary::-webkit-details-marker { display: none; }
   nav a { color: var(--muted); text-decoration: none; }
-  nav a:hover { color: var(--text); }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
+  nav a[aria-current='page'] { font-weight: 600; }
   .actions { display: flex; gap: .75rem; align-items: center; }
-  @media (max-width: 640px) { nav { gap: .9rem; font-size: .9rem; } }
+
+  /* Desktop (>=641px): nav is always an inline row regardless of <details> state */
+  @media (min-width: 641px) {
+    .menu > nav { display: flex; gap: 1.25rem; }
+  }
+
+  /* Mobile (<=640px): collapse to a hamburger; nav is a dropdown shown only when open */
+  @media (max-width: 640px) {
+    .menu > summary {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2.25rem; height: 2.25rem; border: 1px solid var(--border);
+      border-radius: 8px; cursor: pointer; color: var(--text); font-size: 1.15rem;
+    }
+    .menu > nav { display: none; }
+    .menu[open] > nav {
+      display: flex; flex-direction: column; gap: .25rem;
+      position: absolute; right: 0; top: calc(100% + .5rem);
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .5rem; min-width: 10rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .10); z-index: 20;
+    }
+    .menu[open] > nav a { padding: .5rem .75rem; border-radius: 8px; }
+    .menu[open] > nav a:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  }
 </style>
