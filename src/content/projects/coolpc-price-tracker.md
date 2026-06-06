@@ -13,7 +13,8 @@ metrics:
 tags: [資料工程, 爬蟲, 資料視覺化]
 featured: true
 order: 0
-cover: /images/coolpc-cover.png
+cover: ../../assets/coolpc-cover.png
+coverAlt: 原價屋價格追蹤站截圖：商品歷史價格走勢圖
 ---
 ## 問題
 想追蹤 PC 零組件的降價時機，但官網沒有歷史價格。

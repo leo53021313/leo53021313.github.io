@@ -12,7 +12,8 @@ metrics:
 tags: [Data Engineering, Scraping, Data Viz]
 featured: true
 order: 0
-cover: /images/coolpc-cover.png
+cover: ../../../assets/coolpc-cover.png
+coverAlt: Screenshot of the Coolpc price-tracker site showing a product's historical price-trend chart
 ---
 ## Problem
 I wanted to track when PC components drop in price, but the retailer's site keeps no price history.
