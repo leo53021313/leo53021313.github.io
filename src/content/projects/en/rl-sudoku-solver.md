@@ -10,7 +10,7 @@ metrics:
   - "Training convergence curves (TensorBoard: reward / loss vs episodes)"
 tags: [Reinforcement Learning, RL]
 featured: false
-order: 1
+order: 2
 ---
 ## Problem
 Sudoku is usually brute-forced with backtracking / constraint propagation; I wanted to test whether RL can learn a strategy rather than exhaustively search.

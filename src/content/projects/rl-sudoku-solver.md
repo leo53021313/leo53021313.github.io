@@ -11,7 +11,7 @@ metrics:
   # 待補：解題成功率（solved X/100）、平均步數、框架(PyTorch?)、訓練環境(Gymnasium?)
 tags: [強化學習, RL]
 featured: false
-order: 1
+order: 2
 ---
 ## 問題
 數獨通常用回溯/約束傳播暴力解；我想驗證 RL 能否學到「策略」而非窮舉。
