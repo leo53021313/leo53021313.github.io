@@ -1,6 +1,6 @@
 # 自動化作品集 extractor prompt
 
-> **這份是「自動化」版**（推薦）。手動填寫的備援版在 [`new-project-prompt.md`](new-project-prompt.md)。
+> **這份是「自動化」版**。
 >
 > **怎麼用（round-trip）：**
 > 1. 到你**另一個 side project 的資料夾**，開那個專案的 Claude Code。

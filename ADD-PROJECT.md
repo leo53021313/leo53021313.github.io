@@ -6,8 +6,8 @@ no per-project layout or styling to get out of sync.
 
 > **Tip — automated:** paste [`docs/portfolio-extractor-prompt.md`](docs/portfolio-extractor-prompt.md) into the
 > side-project's own Claude Code session; it introspects the repo, captures screenshots, and writes a
-> `Portfolio/<slug>/handoff.md` you hand back. Manual fallback: [`docs/new-project-prompt.md`](docs/new-project-prompt.md).
-> Both map 1:1 to the schema below.
+> `Portfolio/<slug>/handoff.md` you hand back.
+> It maps 1:1 to the schema below.
 
 ## Steps
 
