@@ -162,6 +162,7 @@ Write ONE file `PORTFOLIO_OUTPUT_DIR/<slug>/handoff.md` in the exact OUTPUT SPEC
 - **Notebook-only** → parse `.ipynb` cells+outputs for metrics/charts; nbconvert the result figure as cover; if no eval number, ship descriptive-artifact metric (STEP 2).
 - **Private / no remote** → repoUrl omitted (fail-closed), demoUrl likely omitted; rely on local screenshots + evidence text.
 - **Library (no UI)** → cover = usage snippet or architecture diagram. PREFERRED metric = **API-surface size** (count exported symbols from source — always works offline). Downloads ONLY if a live `pip index`/`npm view` query SUCCEEDS (else UNKNOWN). Coverage ONLY from a freshly-RUN coverage command — a README coverage badge does NOT count as a source.
+- **Push-notification product (no web UI: Discord/Telegram/LINE/email/webhook)** → there is no page to screenshot and the agent usually CANNOT log into the channel. Do NOT boot a server hunting for a UI. Ship ZERO screenshots + an `evidence:` line describing the REAL message, sourced from a README sample / committed fixture / the sender code (never invented). Value metric = cadence or scale (`每日 1 次推送 × 10 則`, `58 個來源`), not a chart. Route "author supplies one real message screenshot" to NEEDS-USER. See WORKED EXAMPLE ②.
 - **Empty git history / shallow clone** → see STEP 0.4; flag time/role/status for the author.
 
 Now begin at STEP 0. Be autonomous; run the commands; cite the risky sources; ask once at the end.
@@ -253,7 +254,7 @@ metrics:
 - [ ] <screenshot/dev-server/gh 失敗：原因 + 可否補圖或網址>
 ````
 
-WORKED EXAMPLE (real coolpc data — the concrete parser contract, not a placeholder):
+WORKED EXAMPLE ① — live-URL web app, `status: done`, has cover (real coolpc data — the concrete parser contract, not a placeholder). This is ONE archetype; the contrasting shapes (no demo / `wip` / no-UI / library / notebook) are EQUALLY valid hand-offs — see example ② below and the MESSY-CASE PLAYBOOK, and do NOT force-fit a project into this shape:
 
 ````markdown
 # 作品 intake：原價屋全站商品歷史價格庫
@@ -310,6 +311,65 @@ UNKNOWN — 踩坑需作者補充
 - [ ] featured/order 最終由 Leo 拍板（建議 featured=true, order=0：有可達 live demo 且 done）
 - [ ] 踩坑：git 史無 fix/revert 線索，請作者補一條真實踩坑
 - [ ] 累積筆數 / 涵蓋類別數：Supabase 再跑 COUNT(*) 補上
+````
+
+WORKED EXAMPLE ② — no live demo, `status: wip`, push-notification evidence, no cover (real ai-news data — the CONTRASTING archetype; IDENTICAL parse contract). Shows the other valid branches: omitted demoUrl/repoUrl/cover, month-only timeframe, value=cadence metric, and `featured: false / order: 99`:
+
+````markdown
+# 作品 intake：AI 新聞與教學每日自動摘要推送
+
+<!-- slug: ai-news-digest | 由 Portfolio Extractor Agent 自動產生 | 來源 repo: private/未確認 -->
+<!-- 語言中立、勿翻譯：slug、tech[] 產品名、demoUrl、repoUrl、timeframe 數字、metrics 內的數字 -->
+
+## 欄位（對應 frontmatter）
+- slug: ai-news-digest
+- title: AI 新聞與教學每日自動摘要推送
+- oneLiner: 每日爬 AI 新聞與教學，自動摘要後推送到 Discord
+<!-- source: git shortlog -sne（單一作者） -->
+- role: 個人專案・LLM 應用 + 自動化
+<!-- source: 0.x、無 release tag、近期仍在 commit -->
+- status: wip
+<!-- source: git log --reverse 首行僅到月；day 不可考 → 退月粒度 -->
+- timeframe: 2026-05 ~ 至今
+- tech: [Python, Google Gemini API, GitHub Actions, Discord Webhook]
+- tags: [LLM, 自動化, 資料管線]
+# demoUrl：純推播、無網頁版（開發中）→ 整行省略
+# repoUrl：無法確認公開 → 整行省略
+# cover / coverAlt：無法登入 Discord 擷取 → 整行省略
+- evidence: Discord 每日摘要訊息截圖（單次推送 10 則）
+- featured: false   <!-- 建議值，非權威；Leo 確認 -->
+- order: 99         <!-- 建議值，非權威；Leo 確認 -->
+
+## metrics（3–6 條；★至少一條 [價值]；可全為 UNKNOWN）
+metrics:
+<!-- source: 來源清單 config 計數 → 58 -->
+  - 58 個來源
+<!-- source: .github/workflows cron 每日 1 次 + 推送設定 10 則 -->
+  - [價值] 每日 1 次推送 × 10 則
+
+## 問題
+AI 資訊量爆炸，想每天自動過濾出值得讀的內容。
+
+## 做法
+多來源爬取 → 去重 → Google Gemini 摘要/分類 → 每日定時（GitHub Actions）推送 Discord。
+
+## 架構
+多來源爬蟲 → 去重 → Gemini 摘要 → Discord 推送
+
+## 踩坑
+GitHub Actions 排程偶發延遲、推送時間漂移；加上重試與失敗告警、改用較寬鬆的觸發窗口收斂。學到：免費排程器不保證準點，外部觸發要按「最終一致」設計而非預期準時。
+
+## 接案視角
+- 對應服務：自動化排程+告警 + LLM 應用整合
+- 客戶/產業/結果：UNKNOWN（repo 無法判定）
+
+## 技術詞校稿
+- 無
+
+## NEEDS-USER（請 Leo / 作者補）
+- [ ] featured/order 最終由 Leo 拍板（建議 featured=false, order=99：無 live demo 且 status=wip）
+- [ ] demoUrl：網頁版開發中，上線後補真實網址
+- [ ] evidence 截圖：agent 無法登入 Discord 擷取，請作者提供一張推送訊息截圖
 ````
 
 ── COPY TO HERE ──
